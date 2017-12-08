@@ -4,10 +4,17 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jewelry.bean.entity.Response;
+import com.jewelry.bean.jpa.Banner;
 import com.jewelry.bean.jpa.BodyPart;
+import com.jewelry.bean.jpa.HomePage;
 import com.jewelry.bean.jpa.JewelryType;
+import com.jewelry.dao.BannerRepository;
 import com.jewelry.dao.BodyPartRepository;
+import com.jewelry.dao.HomePageRepository;
 import com.jewelry.dao.JewelryTypeRepository;
+import com.jewelry.service.HomeService;
+import com.jewelry.utils.ApiStatus;
+import com.jewelry.utils.Commons;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.MediaType;
@@ -23,34 +30,22 @@ import java.util.List;
 @EnableAutoConfiguration
 @RequestMapping("/home")
 public class HomeController {
+
     @Autowired
-    private JewelryTypeRepository jewelryTypeRepository;
-    @Autowired
-    private BodyPartRepository bodyPartRepository;
+    private HomeService homeService;
 
     @RequestMapping(value = "/head.json",produces = MediaType.APPLICATION_JSON_VALUE)
     Response head(){
-        JSONObject headMenu = new JSONObject();
-        JSONArray buttons = new JSONArray();
-
-        List<JewelryType> jewelryTypes = jewelryTypeRepository.findAll();
-        JSONArray result = new JSONArray();
-
-        for(JewelryType jewelryType:jewelryTypes){
-            List<BodyPart> bodyParts = bodyPartRepository.findByTypeIdEquals(jewelryType.getId());
-            JSONObject type = (JSONObject)JSON.toJSON(jewelryType);
-            JSONArray parts = new JSONArray();
-            for(BodyPart bodyPart : bodyParts){
-                JSONObject part = new JSONObject();
-                part.put("id", bodyPart.getId());
-                part.put("name", bodyPart.getName());
-                parts.add(part);
-            }
-            type.put("parts", parts);
-            result.add(type);
-        }
-        return new Response(0, "OK", result);
+        return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), homeService.getHeadMenu());
     }
 
+    @RequestMapping(value = "/banner.json",produces = MediaType.APPLICATION_JSON_VALUE)
+    Response banner(){
+        return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), homeService.getBannerList());
+    }
 
+    @RequestMapping(value = "/page.json",produces = MediaType.APPLICATION_JSON_VALUE)
+    Response homePage(){
+        return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), homeService.getHomePageContent());
+    }
 }
