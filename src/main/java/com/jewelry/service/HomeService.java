@@ -41,6 +41,7 @@ public class HomeService {
             List<BodyPart> bodyParts = bodyPartRepository.findByTypeIdEquals(jewelryType.getId());
             JSONObject type = (JSONObject) JSON.toJSON(jewelryType);
             JSONArray parts = new JSONArray();
+
             for(BodyPart bodyPart : bodyParts){
                 JSONObject part = new JSONObject();
                 part.put("id", bodyPart.getId());
@@ -48,8 +49,19 @@ public class HomeService {
                 parts.add(part);
             }
             type.put("parts", parts);
+            type.put("type", "commodity");
             result.add(type);
         }
+        JSONObject about_us = new JSONObject();
+        about_us.put("name", "关于我们");
+        about_us.put("type", "about_us");
+        result.add(about_us);
+
+        JSONObject join_us = new JSONObject();
+        join_us.put("name", "加入我们");
+        join_us.put("type", "join_us");
+        result.add(join_us);
+
         return result;
     }
 
