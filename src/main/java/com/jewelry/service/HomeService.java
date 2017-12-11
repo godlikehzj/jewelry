@@ -73,6 +73,24 @@ public class HomeService {
         return banners;
     }
 
+    private JSONObject getLine(HomePage homePage,int start){
+        JSONObject one_page = new JSONObject();
+        one_page.put("c_type", homePage.getC_type());
+        //不是文字设置访问url
+        if (homePage.getC_type() != 1){
+            one_page.put("content", Commons.domain + "/home_page/" + homePage.getContent());
+            //图片需要设置跳转商品id
+            if (homePage.getC_type() == 2)
+                one_page.put("commodity_id", homePage.getCommodity_id());
+        }
+        else
+            one_page.put("content", homePage.getContent());
+
+        one_page.put("line_order", homePage.getLine_order() - start + 1);
+
+        return one_page;
+    }
+
     public Object getHomePageContent(){
         Sort.Order lineOrder = new Sort.Order(Sort.Direction.ASC, "line_order");
         Sort.Order indexOrder = new Sort.Order(Sort.Direction.ASC, "index_order");
@@ -81,28 +99,30 @@ public class HomeService {
         list.add(indexOrder);
         Sort sort = new Sort(list);
         List<HomePage> homePages = homePageRepository.findByAndSort(0, sort);
-        JSONArray lines = new JSONArray();
+        JSONObject lines = new JSONObject();
         for (HomePage homePage:homePages){
-            JSONArray subline;
-            if (homePage.getLine_order() > lines.size()){
-                subline = new JSONArray();
+            if (homePage.getLine_order() < 1000){
+                JSONArray subline = lines.getJSONArray("commodities");
+                if (subline == null){
+                    subline = new JSONArray();
+                }
+                subline.add(getLine(homePage, 1));
+                lines.put("commodities", subline);
+            }else if (homePage.getLine_order() < 2000){
+                JSONArray subline = lines.getJSONArray("about_us");
+                if (subline == null){
+                    subline = new JSONArray();
+                }
+                subline.add(getLine(homePage, 1000));
+                lines.put("about_us", subline);
             }else{
-                subline = lines.getJSONArray(homePage.getLine_order() - 1);
+                JSONArray subline = lines.getJSONArray("join_us");
+                if (subline == null){
+                    subline = new JSONArray();
+                }
+                subline.add(getLine(homePage, 2000));
+                lines.put("join_us", subline);
             }
-            JSONObject one_page = new JSONObject();
-            one_page.put("c_type", homePage.getC_type());
-            //不是文字设置访问url
-            if (homePage.getC_type() != 1){
-                one_page.put("content", Commons.domain + "/home_page/" + homePage.getContent());
-                //图片需要设置跳转商品id
-                if (homePage.getC_type() == 2)
-                    one_page.put("commodity_id", homePage.getCommodity_id());
-            }
-            else
-                one_page.put("content", homePage.getContent());
-
-            subline.add(one_page);
-            lines.set(homePage.getLine_order() - 1, subline);
         }
         return lines;
     }
