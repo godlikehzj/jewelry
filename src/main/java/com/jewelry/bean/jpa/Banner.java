@@ -1,61 +1,78 @@
 package com.jewelry.bean.jpa;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class Banner {
+    private long id;
+    private Long goId;
+    private String imgUrl;
+    private Integer status;
+
     @Id
-    @GeneratedValue
-    private Long id;
-    private Long commodity_id;
-    private String img_url;
-    private int status;
-
-    public Banner() {
-    }
-
-    public Banner(Long commodity_id, String img_url, int status) {
-        this.commodity_id = commodity_id;
-        this.img_url = img_url;
-        this.status = status;
-    }
-
-    public Banner(Long commodity_id, String img_url) {
-        this.commodity_id = commodity_id;
-        this.img_url = img_url;
-    }
-
-    public Long getId() {
+    @Column(name = "id")
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Long getCommodity_id() {
-        return commodity_id;
+    @Basic
+    @Column(name = "go_id")
+    public Long getGoId() {
+        return goId;
     }
 
-    public void setCommodity_id(Long commodity_id) {
-        this.commodity_id = commodity_id;
+    public void setGoId(Long goId) {
+        this.goId = goId;
     }
 
-    public String getImg_url() {
-        return img_url;
+    @Basic
+    @Column(name = "img_url")
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public void setImg_url(String img_url) {
-        this.img_url = img_url;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
-    public int getStatus() {
+    @Basic
+    @Column(name = "status")
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Banner banner = (Banner) o;
+
+        if (id != banner.id) return false;
+        if (goId != null ? !goId.equals(banner.goId) : banner.goId != null) return false;
+        if (imgUrl != null ? !imgUrl.equals(banner.imgUrl) : banner.imgUrl != null) return false;
+        if (status != null ? !status.equals(banner.status) : banner.status != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (goId != null ? goId.hashCode() : 0);
+        result = 31 * result + (imgUrl != null ? imgUrl.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        return result;
     }
 }

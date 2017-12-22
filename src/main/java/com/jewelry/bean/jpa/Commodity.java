@@ -1,38 +1,37 @@
 package com.jewelry.bean.jpa;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Entity
 public class Commodity {
-    @Id
-    @GeneratedValue
-    private Long id;
+    private long id;
     private String title;
-    private Integer price;
+    private String listTitle;
+    private int price;
     private String body;
-    private String main_description;
-    private String sub_description;
-    private Integer type_id;
-    private Integer part_id;
-    private Integer meterial_id;
-    private Date create_time;
-    private Date modify_time;
+    private long typeId;
+    private Long meterialId;
+    private long partId;
+    private Timestamp createTime;
+    private Timestamp modifyTime;
     private Long clicks;
 
-    public Commodity() {
-    }
-
-    public Long getId() {
+    @Id
+    @Column(name = "id")
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
+    @Basic
+    @Column(name = "title")
     public String getTitle() {
         return title;
     }
@@ -41,14 +40,28 @@ public class Commodity {
         this.title = title;
     }
 
-    public Integer getPrice() {
+    @Basic
+    @Column(name = "list_title")
+    public String getListTitle() {
+        return listTitle;
+    }
+
+    public void setListTitle(String listTitle) {
+        this.listTitle = listTitle;
+    }
+
+    @Basic
+    @Column(name = "price")
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
+    @Basic
+    @Column(name = "body")
     public String getBody() {
         return body;
     }
@@ -57,67 +70,101 @@ public class Commodity {
         this.body = body;
     }
 
-    public String getMain_description() {
-        return main_description;
+    @Basic
+    @Column(name = "type_id")
+    public long getTypeId() {
+        return typeId;
     }
 
-    public void setMain_description(String main_description) {
-        this.main_description = main_description;
+    public void setTypeId(long typeId) {
+        this.typeId = typeId;
     }
 
-    public String getSub_description() {
-        return sub_description;
+    @Basic
+    @Column(name = "meterial_id")
+    public Long getMeterialId() {
+        return meterialId;
     }
 
-    public void setSub_description(String sub_description) {
-        this.sub_description = sub_description;
+    public void setMeterialId(Long meterialId) {
+        this.meterialId = meterialId;
     }
 
-    public Integer getType_id() {
-        return type_id;
+    @Basic
+    @Column(name = "part_id")
+    public long getPartId() {
+        return partId;
     }
 
-    public void setType_id(Integer type_id) {
-        this.type_id = type_id;
+    public void setPartId(long partId) {
+        this.partId = partId;
     }
 
-    public Integer getPart_id() {
-        return part_id;
+    @Basic
+    @Column(name = "create_time")
+    public Timestamp getCreateTime() {
+        return createTime;
     }
 
-    public void setPart_id(Integer part_id) {
-        this.part_id = part_id;
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
     }
 
-    public Integer getMeterial_id() {
-        return meterial_id;
+    @Basic
+    @Column(name = "modify_time")
+    public Timestamp getModifyTime() {
+        return modifyTime;
     }
 
-    public void setMeterial_id(Integer meterial_id) {
-        this.meterial_id = meterial_id;
+    public void setModifyTime(Timestamp modifyTime) {
+        this.modifyTime = modifyTime;
     }
 
-    public Date getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(Date create_time) {
-        this.create_time = create_time;
-    }
-
-    public Date getModify_time() {
-        return modify_time;
-    }
-
-    public void setModify_time(Date modify_time) {
-        this.modify_time = modify_time;
-    }
-
+    @Basic
+    @Column(name = "clicks")
     public Long getClicks() {
         return clicks;
     }
 
     public void setClicks(Long clicks) {
         this.clicks = clicks;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Commodity commodity = (Commodity) o;
+
+        if (id != commodity.id) return false;
+        if (price != commodity.price) return false;
+        if (typeId != commodity.typeId) return false;
+        if (partId != commodity.partId) return false;
+        if (title != null ? !title.equals(commodity.title) : commodity.title != null) return false;
+        if (listTitle != null ? !listTitle.equals(commodity.listTitle) : commodity.listTitle != null) return false;
+        if (body != null ? !body.equals(commodity.body) : commodity.body != null) return false;
+        if (meterialId != null ? !meterialId.equals(commodity.meterialId) : commodity.meterialId != null) return false;
+        if (createTime != null ? !createTime.equals(commodity.createTime) : commodity.createTime != null) return false;
+        if (modifyTime != null ? !modifyTime.equals(commodity.modifyTime) : commodity.modifyTime != null) return false;
+        if (clicks != null ? !clicks.equals(commodity.clicks) : commodity.clicks != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (listTitle != null ? listTitle.hashCode() : 0);
+        result = 31 * result + price;
+        result = 31 * result + (body != null ? body.hashCode() : 0);
+        result = 31 * result + (int) (typeId ^ (typeId >>> 32));
+        result = 31 * result + (meterialId != null ? meterialId.hashCode() : 0);
+        result = 31 * result + (int) (partId ^ (partId >>> 32));
+        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
+        result = 31 * result + (modifyTime != null ? modifyTime.hashCode() : 0);
+        result = 31 * result + (clicks != null ? clicks.hashCode() : 0);
+        return result;
     }
 }

@@ -3,10 +3,11 @@ package com.jewelry.bean.jpa;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "jewelry_type", schema = "jewelry", catalog = "")
-public class JewelryType {
+@Table(name = "jewelry_meterial", schema = "jewelry", catalog = "")
+public class JewelryMeterial {
     private long id;
     private String name;
+    private Long typeId;
 
     @Id
     @Column(name = "id")
@@ -28,15 +29,26 @@ public class JewelryType {
         this.name = name;
     }
 
+    @Basic
+    @Column(name = "type_id")
+    public Long getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Long typeId) {
+        this.typeId = typeId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        JewelryType that = (JewelryType) o;
+        JewelryMeterial that = (JewelryMeterial) o;
 
         if (id != that.id) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (typeId != null ? !typeId.equals(that.typeId) : that.typeId != null) return false;
 
         return true;
     }
@@ -45,6 +57,7 @@ public class JewelryType {
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (typeId != null ? typeId.hashCode() : 0);
         return result;
     }
 }

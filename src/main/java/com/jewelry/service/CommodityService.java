@@ -1,10 +1,13 @@
 package com.jewelry.service;
 
-import com.jewelry.bean.entity.Response;
+import com.alibaba.fastjson.JSONObject;
+import com.jewelry.bean.entity.PositionType;
 import com.jewelry.bean.entity.Sortype;
+import com.jewelry.bean.jpa.CPicture;
 import com.jewelry.bean.jpa.Commodity;
-import com.jewelry.dao.CommodityRepository;
-import com.jewelry.utils.ApiStatus;
+import com.jewelry.bean.jpa.JewelryType;
+import com.jewelry.dao.*;
+import com.jewelry.utils.Commons;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -16,11 +19,24 @@ import java.util.List;
 public class CommodityService {
     @Autowired
     private CommodityRepository commodityRepository;
-    public Object getCommodityList(Integer type_id, Integer part_id, Integer meterial_id, Integer sort){
+
+    @Autowired
+    private JewelryTypeRepository jewelryTypeRepository;
+
+    @Autowired
+    private BodyPartRepository bodyPartRepository;
+
+    @Autowired
+    private CPictureRespository cPictureRespository;
+
+    @Autowired
+    private JewelryMeterialRepository jewelryMeterialRepository;
+
+    public Object getCommodityList(Long list_id, List<Long> meterial_ids, Integer sort){
         Sort sorter = null;
         if (sort != null){
             if (sort == Sortype.createTime.getIndex())
-                sorter = new Sort(Sort.Direction.DESC, "create_time");
+                sorter = new Sort(Sort.Direction.DESC, "createTime");
             else if (sort == Sortype.price_high.getIndex())
                 sorter = new Sort(Sort.Direction.DESC, "price");
             else if (sort == Sortype.price_low.getIndex())
@@ -28,20 +44,50 @@ public class CommodityService {
             else if (sort == Sortype.hot.getIndex())
                 sorter = new Sort(Sort.Direction.ASC, "clicks");
         }
+        Long type_id;
+        Long part_id;
+        List<Commodity> commodities;
 
-        List<Commodity> commodities = null;
-        if (type_id != null && part_id == null && meterial_id == null){
-            commodities = commodityRepository.findAllByType_id(type_id, sorter);
-        }else if (type_id != null && part_id != null && meterial_id == null){
-            commodities = commodityRepository.findAllByType_idAndPart_id(type_id, part_id, sorter);
-        }else if (type_id != null && part_id != null && meterial_id != null){
-            commodities = commodityRepository.findAllByType_idAndPart_idAndMeterial_id(type_id, part_id, meterial_id, sorter);
+        JewelryType jewelryType = jewelryTypeRepository.getById(list_id);
+        if (jewelryType == null){
+            part_id = list_id;
+            if (meterial_ids == null)
+                commodities = commodityRepository.findAllByPartId(part_id, sorter);
+            else
+                commodities = commodityRepository.findAllByPartIdAndMeterialIdIn(part_id, meterial_ids, sorter);
+        }else{
+            type_id = list_id;
+            if (meterial_ids == null)
+                commodities = commodityRepository.findAllByTypeId(type_id, sorter);
+            else
+                commodities = commodityRepository.findAllByTypeIdAndMeterialIdIn(type_id, meterial_ids, sorter);
         }
 
-        return commodities;
+        List<Object> result = new ArrayList<Object>();
+        for(Commodity commodity : commodities){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("commodityId", commodity.getId());
+            jsonObject.put("title", commodity.getListTitle());
+            jsonObject.put("price", commodity.getPrice());
+            List<CPicture> cpictures = cPictureRespository.findAllByCommodityIdAndPositionType(commodity.getId(), PositionType.List.ordinal());
+            List<String> imgs = new ArrayList<String>();
+            for(CPicture cpicture:cpictures){
+                imgs.add(Commons.domain + "/commodity/" + PositionType.List.ordinal() + cpicture.getPicName());
+            }
+            jsonObject.put("meterial", jewelryMeterialRepository.getOne(commodity.getMeterialId()).getName());
+
+            jsonObject.put("img", imgs);
+            result.add(jsonObject);
+        }
+
+        return result;
     }
 
     public Object getCommodity(Long commodity_id){
         return commodityRepository.getCommodityById(commodity_id);
+    }
+
+    public Object getMeterialList(Long type_id){
+        return jewelryMeterialRepository.findAllByTypeId(type_id);
     }
 }
