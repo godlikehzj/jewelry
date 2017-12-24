@@ -59,7 +59,7 @@ public class HomeService {
     public Object getBannerList(){
         List<Banner> banners = bannerRepository.findAllByStatusIsNot(0);
         for (Banner banner:banners){
-            banner.setImgUrl(Commons.domain + "/banner/" + banner.getImgUrl());
+            banner.setImgUrl(Commons.img_url + "/banner/" + banner.getImgUrl());
         }
         return banners;
     }
@@ -71,7 +71,7 @@ public class HomeService {
 
         //不是文字设置访问url
         if (homePage.getcType() != 1){
-            one_page.put("content", Commons.domain + "/home_page/" + homePage.getContent());
+            one_page.put("content", Commons.img_url + "/home_page/" + homePage.getContent());
             //图片需要设置跳转商品id
             if (homePage.getcType() == 2)
                 one_page.put("goId", homePage.getGoId());
@@ -90,7 +90,7 @@ public class HomeService {
         //获取banner信息
         List<Banner> banners = bannerRepository.findAllByStatusIsNot(0);
         for (Banner banner:banners){
-            banner.setImgUrl(Commons.domain + "/banner/" + banner.getImgUrl());
+            banner.setImgUrl(Commons.img_url + "/banner/" + banner.getImgUrl());
         }
 
         lines.put("banners", banners);

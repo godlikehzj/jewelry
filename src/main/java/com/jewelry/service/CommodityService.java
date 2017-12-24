@@ -72,7 +72,7 @@ public class CommodityService {
             List<CPicture> cpictures = cPictureRespository.findAllByCommodityIdAndPositionType(commodity.getId(), PositionType.List.ordinal());
             List<String> imgs = new ArrayList<String>();
             for(CPicture cpicture:cpictures){
-                imgs.add(Commons.domain + "/commodity/" + PositionType.List.ordinal() + cpicture.getPicName());
+                imgs.add(Commons.img_url + "/commodity/" + PositionType.List.ordinal() + cpicture.getPicName());
             }
             jsonObject.put("meterial", jewelryMeterialRepository.getOne(commodity.getMeterialId()).getName());
 
