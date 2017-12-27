@@ -47,6 +47,7 @@ public class HomeService {
                 JSONObject part = new JSONObject();
                 part.put("id", bodyPart.getId());
                 part.put("name", bodyPart.getName());
+                part.put("enName", bodyPart.getEnName());
                 parts.add(part);
             }
             type.put("parts", parts);
@@ -64,7 +65,7 @@ public class HomeService {
         return banners;
     }
 
-    private JSONObject getLine(HomePage homePage, HomePageType homePageType){
+    private JSONObject getLine(HomePage homePage){
         JSONObject one_page = new JSONObject();
         one_page.put("cType", homePage.getcType());
         one_page.put("widthNum", homePage.getWidthNum());
@@ -78,9 +79,6 @@ public class HomeService {
         }
         else
             one_page.put("content", homePage.getContent());
-
-        one_page.put("pType", homePageType.ordinal());
-
         return one_page;
     }
 
@@ -103,24 +101,59 @@ public class HomeService {
         list.add(indexOrder);
         Sort sort = new Sort(list);
         List<HomePage> homePages = homePageRepository.findAllByStatusNot(0, sort);
-        List<List<Object>> pages = new ArrayList<List<Object>>();
+        List<Line> pages = new ArrayList<Line>();
 
         int current_line = 0;
+        Line line = null;
         for (HomePage homePage:homePages){
+
             if (current_line != homePage.getLineOrder()){
                 current_line = homePage.getLineOrder();
-                pages.add(new ArrayList<Object>());
+                line = new Line(0, new ArrayList<Object>());
+                pages.add(line);
             }
             if (current_line < 1000){
-                pages.get(pages.size() - 1).add(getLine(homePage, HomePageType.commodity_pages));
+                line.setType(HomePageType.commodity_pages.ordinal());
+                line.getLine().add(getLine(homePage));
             }else if (current_line < 2000){
-                pages.get(pages.size() - 1).add(getLine(homePage, HomePageType.about_us));
+                line.setType(HomePageType.about_us.ordinal());
+                line.getLine().add(getLine(homePage));
             }else{
-                pages.get(pages.size() - 1).add(getLine(homePage, HomePageType.join_us));
+                line.setType(HomePageType.join_us.ordinal());
+                line.getLine().add(getLine(homePage));
             }
         }
 
         lines.put("pages", pages);
         return lines;
+    }
+
+    private class Line{
+        private int type;
+        private List<Object> line;
+
+        public Line() {
+        }
+
+        public Line(int type, List<Object> line) {
+            this.type = type;
+            this.line = line;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+
+        public List<Object> getLine() {
+            return line;
+        }
+
+        public void setLine(List<Object> line) {
+            this.line = line;
+        }
     }
 }

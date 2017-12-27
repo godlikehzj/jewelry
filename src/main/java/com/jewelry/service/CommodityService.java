@@ -68,6 +68,7 @@ public class CommodityService {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("commodityId", commodity.getId());
             jsonObject.put("title", commodity.getListTitle());
+            jsonObject.put("enTitle", commodity.getEnListTitle());
             jsonObject.put("price", commodity.getPrice());
             List<CPicture> cpictures = cPictureRespository.findAllByCommodityIdAndPositionType(commodity.getId(), PositionType.List.ordinal());
             List<String> imgs = new ArrayList<String>();
@@ -75,6 +76,8 @@ public class CommodityService {
                 imgs.add(Commons.img_url + "/commodity/" + PositionType.List.ordinal() + cpicture.getPicName());
             }
             jsonObject.put("meterial", jewelryMeterialRepository.getOne(commodity.getMeterialId()).getName());
+            jsonObject.put("enMeterial", jewelryMeterialRepository.getOne(commodity.getMeterialId()).getEnName());
+
 
             jsonObject.put("img", imgs);
             result.add(jsonObject);

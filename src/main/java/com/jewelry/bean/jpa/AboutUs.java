@@ -8,7 +8,9 @@ import java.sql.Timestamp;
 public class AboutUs {
     private long id;
     private String tabName;
+    private String enTabName;
     private String content;
+    private String enContent;
     private Timestamp createTime;
     private Integer status;
 
@@ -33,6 +35,16 @@ public class AboutUs {
     }
 
     @Basic
+    @Column(name = "en_tab_name")
+    public String getEnTabName() {
+        return enTabName;
+    }
+
+    public void setEnTabName(String enTabName) {
+        this.enTabName = enTabName;
+    }
+
+    @Basic
     @Column(name = "content")
     public String getContent() {
         return content;
@@ -40,6 +52,16 @@ public class AboutUs {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Basic
+    @Column(name = "en_content")
+    public String getEnContent() {
+        return enContent;
+    }
+
+    public void setEnContent(String enContent) {
+        this.enContent = enContent;
     }
 
     @Basic
@@ -71,7 +93,9 @@ public class AboutUs {
 
         if (id != aboutUs.id) return false;
         if (tabName != null ? !tabName.equals(aboutUs.tabName) : aboutUs.tabName != null) return false;
+        if (enTabName != null ? !enTabName.equals(aboutUs.enTabName) : aboutUs.enTabName != null) return false;
         if (content != null ? !content.equals(aboutUs.content) : aboutUs.content != null) return false;
+        if (enContent != null ? !enContent.equals(aboutUs.enContent) : aboutUs.enContent != null) return false;
         if (createTime != null ? !createTime.equals(aboutUs.createTime) : aboutUs.createTime != null) return false;
         if (status != null ? !status.equals(aboutUs.status) : aboutUs.status != null) return false;
 
@@ -82,7 +106,9 @@ public class AboutUs {
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (tabName != null ? tabName.hashCode() : 0);
+        result = 31 * result + (enTabName != null ? enTabName.hashCode() : 0);
         result = 31 * result + (content != null ? content.hashCode() : 0);
+        result = 31 * result + (enContent != null ? enContent.hashCode() : 0);
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;

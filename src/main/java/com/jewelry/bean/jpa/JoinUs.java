@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 public class JoinUs {
     private long id;
     private String content;
+    private String enContent;
     private Timestamp createTime;
     private Integer status;
 
@@ -29,6 +30,16 @@ public class JoinUs {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Basic
+    @Column(name = "en_content")
+    public String getEnContent() {
+        return enContent;
+    }
+
+    public void setEnContent(String enContent) {
+        this.enContent = enContent;
     }
 
     @Basic
@@ -60,6 +71,7 @@ public class JoinUs {
 
         if (id != joinUs.id) return false;
         if (content != null ? !content.equals(joinUs.content) : joinUs.content != null) return false;
+        if (enContent != null ? !enContent.equals(joinUs.enContent) : joinUs.enContent != null) return false;
         if (createTime != null ? !createTime.equals(joinUs.createTime) : joinUs.createTime != null) return false;
         if (status != null ? !status.equals(joinUs.status) : joinUs.status != null) return false;
 
@@ -70,6 +82,7 @@ public class JoinUs {
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (content != null ? content.hashCode() : 0);
+        result = 31 * result + (enContent != null ? enContent.hashCode() : 0);
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;

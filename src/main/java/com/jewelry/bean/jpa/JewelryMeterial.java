@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class JewelryMeterial {
     private long id;
     private String name;
+    private String enName;
     private Long typeId;
 
     @Id
@@ -30,6 +31,16 @@ public class JewelryMeterial {
     }
 
     @Basic
+    @Column(name = "en_name")
+    public String getEnName() {
+        return enName;
+    }
+
+    public void setEnName(String enName) {
+        this.enName = enName;
+    }
+
+    @Basic
     @Column(name = "type_id")
     public Long getTypeId() {
         return typeId;
@@ -48,6 +59,7 @@ public class JewelryMeterial {
 
         if (id != that.id) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (enName != null ? !enName.equals(that.enName) : that.enName != null) return false;
         if (typeId != null ? !typeId.equals(that.typeId) : that.typeId != null) return false;
 
         return true;
@@ -57,6 +69,7 @@ public class JewelryMeterial {
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (enName != null ? enName.hashCode() : 0);
         result = 31 * result + (typeId != null ? typeId.hashCode() : 0);
         return result;
     }

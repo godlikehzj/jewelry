@@ -8,6 +8,7 @@ public class HomePage {
     private long id;
     private Integer cType;
     private String content;
+    private String enContent;
     private Integer indexOrder;
     private Integer lineOrder;
     private Long goId;
@@ -42,6 +43,16 @@ public class HomePage {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Basic
+    @Column(name = "en_content")
+    public String getEnContent() {
+        return enContent;
+    }
+
+    public void setEnContent(String enContent) {
+        this.enContent = enContent;
     }
 
     @Basic
@@ -104,6 +115,7 @@ public class HomePage {
         if (id != homePage.id) return false;
         if (cType != null ? !cType.equals(homePage.cType) : homePage.cType != null) return false;
         if (content != null ? !content.equals(homePage.content) : homePage.content != null) return false;
+        if (enContent != null ? !enContent.equals(homePage.enContent) : homePage.enContent != null) return false;
         if (indexOrder != null ? !indexOrder.equals(homePage.indexOrder) : homePage.indexOrder != null) return false;
         if (lineOrder != null ? !lineOrder.equals(homePage.lineOrder) : homePage.lineOrder != null) return false;
         if (goId != null ? !goId.equals(homePage.goId) : homePage.goId != null) return false;
@@ -118,6 +130,7 @@ public class HomePage {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (cType != null ? cType.hashCode() : 0);
         result = 31 * result + (content != null ? content.hashCode() : 0);
+        result = 31 * result + (enContent != null ? enContent.hashCode() : 0);
         result = 31 * result + (indexOrder != null ? indexOrder.hashCode() : 0);
         result = 31 * result + (lineOrder != null ? lineOrder.hashCode() : 0);
         result = 31 * result + (goId != null ? goId.hashCode() : 0);

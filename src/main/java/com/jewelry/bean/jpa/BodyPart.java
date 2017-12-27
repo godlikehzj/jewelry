@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class BodyPart {
     private long id;
     private String name;
+    private String enName;
     private String description;
     private Long typeId;
 
@@ -28,6 +29,16 @@ public class BodyPart {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Basic
+    @Column(name = "en_name")
+    public String getEnName() {
+        return enName;
+    }
+
+    public void setEnName(String enName) {
+        this.enName = enName;
     }
 
     @Basic
@@ -59,6 +70,7 @@ public class BodyPart {
 
         if (id != bodyPart.id) return false;
         if (name != null ? !name.equals(bodyPart.name) : bodyPart.name != null) return false;
+        if (enName != null ? !enName.equals(bodyPart.enName) : bodyPart.enName != null) return false;
         if (description != null ? !description.equals(bodyPart.description) : bodyPart.description != null)
             return false;
         if (typeId != null ? !typeId.equals(bodyPart.typeId) : bodyPart.typeId != null) return false;
@@ -70,6 +82,7 @@ public class BodyPart {
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (enName != null ? enName.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (typeId != null ? typeId.hashCode() : 0);
         return result;
