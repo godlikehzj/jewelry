@@ -1,5 +1,6 @@
 package com.jewelry.service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jewelry.bean.entity.PositionType;
 import com.jewelry.bean.entity.Sortype;
@@ -63,6 +64,7 @@ public class CommodityService {
                 commodities = commodityRepository.findAllByTypeIdAndMeterialIdIn(type_id, meterial_ids, sorter);
         }
 
+        Double transfor =  Commons.getUSD();
         List<Object> result = new ArrayList<Object>();
         for(Commodity commodity : commodities){
             JSONObject jsonObject = new JSONObject();
@@ -70,6 +72,7 @@ public class CommodityService {
             jsonObject.put("title", commodity.getListTitle());
             jsonObject.put("enTitle", commodity.getEnListTitle());
             jsonObject.put("price", commodity.getPrice());
+            jsonObject.put("usPrice", new Double(commodity.getPrice() * transfor).intValue());
             List<CPicture> cpictures = cPictureRespository.findAllByCommodityIdAndPositionType(commodity.getId(), PositionType.List.ordinal());
             List<String> imgs = new ArrayList<String>();
             for(CPicture cpicture:cpictures){
@@ -87,7 +90,13 @@ public class CommodityService {
     }
 
     public Object getCommodity(Long commodity_id){
-        return commodityRepository.getCommodityById(commodity_id);
+        Commodity commodity = commodityRepository.getCommodityById(commodity_id);
+        if (commodity == null) return null;
+
+        Double transfor =  Commons.getUSD();
+        JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(commodity));
+        jsonObject.put("usPrice",  new Double(commodity.getPrice() * transfor).intValue());
+        return jsonObject;
     }
 
     public Object getMeterialList(Long type_id){
