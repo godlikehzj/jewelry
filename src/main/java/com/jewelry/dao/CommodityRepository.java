@@ -1,8 +1,10 @@
-package com.jewelry.dao.cn;
+package com.jewelry.dao;
 
-import com.jewelry.bean.jpa.cn.Commodity;
+import com.jewelry.bean.jpa.Commodity;
+import com.jewelry.bean.jpa.JewelryMeterial;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 

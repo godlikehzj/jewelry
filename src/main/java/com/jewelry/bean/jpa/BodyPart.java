@@ -1,4 +1,4 @@
-package com.jewelry.bean.jpa.cn;
+package com.jewelry.bean.jpa;
 
 import javax.persistence.*;
 

@@ -1,6 +1,6 @@
 package com.jewelry.service;
 
-import com.jewelry.dao.cn.AboutUsRepository;
+import com.jewelry.dao.AboutUsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

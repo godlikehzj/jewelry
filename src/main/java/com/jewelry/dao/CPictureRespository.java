@@ -1,6 +1,6 @@
-package com.jewelry.dao.cn;
+package com.jewelry.dao;
 
-import com.jewelry.bean.jpa.cn.CPicture;
+import com.jewelry.bean.jpa.CPicture;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
