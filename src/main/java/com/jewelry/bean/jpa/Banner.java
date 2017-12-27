@@ -1,9 +1,11 @@
 package com.jewelry.bean.jpa;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
-@Table(name = "banner", schema = "jewelry", catalog = "")
 public class Banner {
     private long id;
     private Long goId;

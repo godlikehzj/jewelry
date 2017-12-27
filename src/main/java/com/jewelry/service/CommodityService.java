@@ -24,6 +24,9 @@ public class CommodityService {
     private JewelryTypeRepository jewelryTypeRepository;
 
     @Autowired
+    private BodyPartRepository bodyPartRepository;
+
+    @Autowired
     private CPictureRespository cPictureRespository;
 
     @Autowired

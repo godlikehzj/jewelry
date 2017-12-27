@@ -2,7 +2,6 @@ package com.jewelry.controller;
 
 import com.jewelry.bean.entity.Response;
 import com.jewelry.service.CommodityService;
-import com.jewelry.service.en.CommodityENService;
 import com.jewelry.utils.ApiStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -23,9 +22,6 @@ public class CommodityController {
     @Autowired
     private CommodityService commodityService;
 
-    @Autowired
-    private CommodityENService commodityServiceEn;
-
     @RequestMapping(value = "/list",produces = MediaType.APPLICATION_JSON_VALUE)
     Response commodityList(@RequestParam("list_id") Long list_id,
                            String meterial_id,
@@ -38,16 +34,16 @@ public class CommodityController {
             for(String mid:smids)
                 mids.add(Long.valueOf(mid));
         }
-        return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), commodityService.getCommodityList(list_id, mids, sort), commodityServiceEn.getCommodityList(list_id, mids, sort));
+        return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), commodityService.getCommodityList(list_id, mids, sort));
     }
 
     @RequestMapping(value = "/one",produces = MediaType.APPLICATION_JSON_VALUE)
     Response oneCommodity(@RequestParam("commodity_id") Long commodity_id){
-        return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), commodityService.getCommodity(commodity_id),commodityServiceEn.getCommodity(commodity_id));
+        return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), commodityService.getCommodity(commodity_id));
     }
 
     @RequestMapping(value = "meterial/list" ,produces = MediaType.APPLICATION_JSON_VALUE)
     Response meterialList(@RequestParam("type_id") Long type_id){
-        return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), commodityService.getMeterialList(type_id), commodityServiceEn.getMeterialList(type_id));
+        return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), commodityService.getMeterialList(type_id));
     }
 }

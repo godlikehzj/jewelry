@@ -57,14 +57,14 @@ public class HomeService {
     }
 
     public Object getBannerList(){
-        List<Banner> banners = bannerRepository.findAllByStatus(1);
+        List<Banner> banners = bannerRepository.findAllByStatusIsNot(0);
         for (Banner banner:banners){
             banner.setImgUrl(Commons.img_url + "/banner/" + banner.getImgUrl());
         }
         return banners;
     }
 
-    private JSONObject getLine(HomePage homePage){
+    private JSONObject getLine(HomePage homePage, HomePageType homePageType){
         JSONObject one_page = new JSONObject();
         one_page.put("cType", homePage.getcType());
         one_page.put("widthNum", homePage.getWidthNum());
@@ -79,6 +79,8 @@ public class HomeService {
         else
             one_page.put("content", homePage.getContent());
 
+        one_page.put("pType", homePageType.ordinal());
+
         return one_page;
     }
 
@@ -86,7 +88,7 @@ public class HomeService {
         JSONObject lines = new JSONObject();
 
         //获取banner信息
-        List<Banner> banners = bannerRepository.findAllByStatus(1);
+        List<Banner> banners = bannerRepository.findAllByStatusIsNot(0);
         for (Banner banner:banners){
             banner.setImgUrl(Commons.img_url + "/banner/" + banner.getImgUrl());
         }
@@ -101,59 +103,24 @@ public class HomeService {
         list.add(indexOrder);
         Sort sort = new Sort(list);
         List<HomePage> homePages = homePageRepository.findAllByStatusNot(0, sort);
-        List<Line> pages = new ArrayList<Line>();
+        List<List<Object>> pages = new ArrayList<List<Object>>();
 
         int current_line = 0;
-        Line line = null;
         for (HomePage homePage:homePages){
-
             if (current_line != homePage.getLineOrder()){
                 current_line = homePage.getLineOrder();
-                line = new Line(0, new ArrayList<Object>());
-                pages.add(line);
+                pages.add(new ArrayList<Object>());
             }
             if (current_line < 1000){
-                line.setType(HomePageType.commodity_pages.ordinal());
-                line.getLine().add(getLine(homePage));
+                pages.get(pages.size() - 1).add(getLine(homePage, HomePageType.commodity_pages));
             }else if (current_line < 2000){
-                line.setType(HomePageType.about_us.ordinal());
-                line.getLine().add(getLine(homePage));
+                pages.get(pages.size() - 1).add(getLine(homePage, HomePageType.about_us));
             }else{
-                line.setType(HomePageType.join_us.ordinal());
-                line.getLine().add(getLine(homePage));
+                pages.get(pages.size() - 1).add(getLine(homePage, HomePageType.join_us));
             }
         }
 
         lines.put("pages", pages);
         return lines;
-    }
-
-    private class Line{
-        private int type;
-        private List<Object> line;
-
-        public Line() {
-        }
-
-        public Line(int type, List<Object> line) {
-            this.type = type;
-            this.line = line;
-        }
-
-        public int getType() {
-            return type;
-        }
-
-        public void setType(int type) {
-            this.type = type;
-        }
-
-        public List<Object> getLine() {
-            return line;
-        }
-
-        public void setLine(List<Object> line) {
-            this.line = line;
-        }
     }
 }

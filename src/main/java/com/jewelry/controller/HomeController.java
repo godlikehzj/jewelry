@@ -2,7 +2,6 @@ package com.jewelry.controller;
 
 import com.jewelry.bean.entity.Response;
 import com.jewelry.service.HomeService;
-import com.jewelry.service.en.HomeENService;
 import com.jewelry.utils.ApiStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -21,21 +20,18 @@ public class HomeController {
     @Autowired
     private HomeService homeService;
 
-    @Autowired
-    private HomeENService homeServiceEn;
-
     @RequestMapping(value = "/menu",produces = MediaType.APPLICATION_JSON_VALUE)
     Response head(){
-        return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), homeService.getHeadMenu(),  homeServiceEn.getHeadMenu());
+        return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), homeService.getHeadMenu());
     }
 
     @RequestMapping(value = "/banner",produces = MediaType.APPLICATION_JSON_VALUE)
     Response banner(){
-        return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), homeService.getBannerList(), homeServiceEn.getBannerList());
+        return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), homeService.getBannerList());
     }
 
     @RequestMapping(value = "/page",produces = MediaType.APPLICATION_JSON_VALUE)
     Response homePage(){
-        return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), homeService.getHomePageContent(), homeServiceEn.getHomePageContent());
+        return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), homeService.getHomePageContent());
     }
 }
