@@ -1,4 +1,4 @@
-package com.jewelry;
+package com.jewelry.config;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.AbstractJsonpResponseBodyAdvice;

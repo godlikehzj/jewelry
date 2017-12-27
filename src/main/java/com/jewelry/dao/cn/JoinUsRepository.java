@@ -1,9 +1,7 @@
-package com.jewelry.dao;
+package com.jewelry.dao.cn;
 
-import com.jewelry.bean.jpa.JoinUs;
+import com.jewelry.bean.jpa.cn.JoinUs;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.List;
 
 public interface JoinUsRepository extends JpaRepository<JoinUs, Long> {
     JoinUs getByStatus(int status);

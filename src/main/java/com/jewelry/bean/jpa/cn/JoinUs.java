@@ -1,13 +1,12 @@
-package com.jewelry.bean.jpa;
+package com.jewelry.bean.jpa.cn;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "about_us", schema = "jewelry", catalog = "")
-public class AboutUs {
+@Table(name = "join_us", schema = "jewelry", catalog = "")
+public class JoinUs {
     private long id;
-    private String tabName;
     private String content;
     private Timestamp createTime;
     private Integer status;
@@ -20,16 +19,6 @@ public class AboutUs {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    @Basic
-    @Column(name = "tab_name")
-    public String getTabName() {
-        return tabName;
-    }
-
-    public void setTabName(String tabName) {
-        this.tabName = tabName;
     }
 
     @Basic
@@ -67,13 +56,12 @@ public class AboutUs {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        AboutUs aboutUs = (AboutUs) o;
+        JoinUs joinUs = (JoinUs) o;
 
-        if (id != aboutUs.id) return false;
-        if (tabName != null ? !tabName.equals(aboutUs.tabName) : aboutUs.tabName != null) return false;
-        if (content != null ? !content.equals(aboutUs.content) : aboutUs.content != null) return false;
-        if (createTime != null ? !createTime.equals(aboutUs.createTime) : aboutUs.createTime != null) return false;
-        if (status != null ? !status.equals(aboutUs.status) : aboutUs.status != null) return false;
+        if (id != joinUs.id) return false;
+        if (content != null ? !content.equals(joinUs.content) : joinUs.content != null) return false;
+        if (createTime != null ? !createTime.equals(joinUs.createTime) : joinUs.createTime != null) return false;
+        if (status != null ? !status.equals(joinUs.status) : joinUs.status != null) return false;
 
         return true;
     }
@@ -81,7 +69,6 @@ public class AboutUs {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (tabName != null ? tabName.hashCode() : 0);
         result = 31 * result + (content != null ? content.hashCode() : 0);
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);

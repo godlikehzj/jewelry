@@ -1,4 +1,4 @@
-package com.jewelry.bean.jpa;
+package com.jewelry.bean.jpa.cn;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
