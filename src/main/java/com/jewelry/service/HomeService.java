@@ -77,8 +77,11 @@ public class HomeService {
             if (homePage.getcType() == 2)
                 one_page.put("goId", homePage.getGoId());
         }
-        else
+        else{
             one_page.put("content", homePage.getContent());
+            one_page.put("enContent", homePage.getEnContent());
+        }
+
         return one_page;
     }
 
