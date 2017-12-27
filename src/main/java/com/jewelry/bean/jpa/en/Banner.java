@@ -1,9 +1,9 @@
-package com.jewelry.bean.jpa.cn;
+package com.jewelry.bean.jpa.en;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "banner", schema = "jewelry", catalog = "")
+@Table(name = "banner", schema = "jewelry_en", catalog = "")
 public class Banner {
     private long id;
     private Long goId;

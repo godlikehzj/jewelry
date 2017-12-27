@@ -1,17 +1,17 @@
-package com.jewelry.service;
+package com.jewelry.service.en;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jewelry.bean.entity.HomePageType;
-import com.jewelry.bean.jpa.cn.Banner;
-import com.jewelry.bean.jpa.cn.BodyPart;
-import com.jewelry.bean.jpa.cn.HomePage;
-import com.jewelry.bean.jpa.cn.JewelryType;
-import com.jewelry.dao.cn.BannerRepository;
-import com.jewelry.dao.cn.BodyPartRepository;
-import com.jewelry.dao.cn.HomePageRepository;
-import com.jewelry.dao.cn.JewelryTypeRepository;
+import com.jewelry.bean.jpa.en.Banner;
+import com.jewelry.bean.jpa.en.BodyPart;
+import com.jewelry.bean.jpa.en.HomePage;
+import com.jewelry.bean.jpa.en.JewelryType;
+import com.jewelry.dao.en.BannerENRepository;
+import com.jewelry.dao.en.BodyPartENRepository;
+import com.jewelry.dao.en.HomePageENRepository;
+import com.jewelry.dao.en.JewelryTypeENRepository;
 import com.jewelry.utils.Commons;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -21,18 +21,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class HomeService {
+public class HomeENService {
     @Autowired
-    private JewelryTypeRepository jewelryTypeRepository;
+    private JewelryTypeENRepository jewelryTypeRepository;
 
     @Autowired
-    private BodyPartRepository bodyPartRepository;
+    private BodyPartENRepository bodyPartRepository;
 
     @Autowired
-    private BannerRepository bannerRepository;
+    private BannerENRepository bannerRepository;
 
     @Autowired
-    private HomePageRepository homePageRepository;
+    private HomePageENRepository homePageRepository;
 
     public Object getHeadMenu(){
         List<JewelryType> jewelryTypes = jewelryTypeRepository.findAll();

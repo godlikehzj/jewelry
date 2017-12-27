@@ -1,12 +1,15 @@
-package com.jewelry.service;
+package com.jewelry.service.en;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jewelry.bean.entity.PositionType;
 import com.jewelry.bean.entity.Sortype;
-import com.jewelry.bean.jpa.cn.CPicture;
-import com.jewelry.bean.jpa.cn.Commodity;
-import com.jewelry.bean.jpa.cn.JewelryType;
-import com.jewelry.dao.cn.*;
+import com.jewelry.bean.jpa.en.CPicture;
+import com.jewelry.bean.jpa.en.Commodity;
+import com.jewelry.bean.jpa.en.JewelryType;
+import com.jewelry.dao.en.CPictureENRespository;
+import com.jewelry.dao.en.CommodityENRepository;
+import com.jewelry.dao.en.JewelryMeterialENRepository;
+import com.jewelry.dao.en.JewelryTypeENRepository;
 import com.jewelry.utils.Commons;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -16,18 +19,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CommodityService {
+public class CommodityENService {
     @Autowired
-    private CommodityRepository commodityRepository;
+    private CommodityENRepository commodityRepository;
 
     @Autowired
-    private JewelryTypeRepository jewelryTypeRepository;
+    private JewelryTypeENRepository jewelryTypeRepository;
 
     @Autowired
-    private CPictureRespository cPictureRespository;
+    private CPictureENRespository cPictureRespository;
 
     @Autowired
-    private JewelryMeterialRepository jewelryMeterialRepository;
+    private JewelryMeterialENRepository jewelryMeterialRepository;
 
     public Object getCommodityList(Long list_id, List<Long> meterial_ids, Integer sort){
         Sort sorter = null;
