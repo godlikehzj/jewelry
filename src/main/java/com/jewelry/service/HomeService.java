@@ -89,7 +89,8 @@ public class HomeService {
         JSONObject lines = new JSONObject();
 
         //获取banner信息
-        List<Banner> banners = bannerRepository.findAllByStatusIsNot(0);
+        Sort bannerSort = new Sort(Sort.Direction.ASC, "pindex");
+        List<Banner> banners = bannerRepository.findAll(bannerSort);
         for (Banner banner:banners){
             banner.setImgUrl(Commons.domain + banner.getImgUrl());
         }
@@ -103,7 +104,7 @@ public class HomeService {
         list.add(lineOrder);
         list.add(indexOrder);
         Sort sort = new Sort(list);
-        List<HomePage> homePages = homePageRepository.findAllByStatusNot(0, sort);
+        List<HomePage> homePages = homePageRepository.findAll(sort);
         List<Line> pages = new ArrayList<Line>();
 
         int current_line = 0;

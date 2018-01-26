@@ -96,6 +96,12 @@ public class CommodityService {
         Double transfor =  Commons.getUSD();
         JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(commodity));
         jsonObject.put("usPrice",  new Double(commodity.getPrice() * transfor).intValue());
+        List<CPicture> cpictures = cPictureRespository.findAllByCommodityIdAndPositionType(commodity_id, PositionType.Detail.ordinal());
+        List<String> imgs = new ArrayList<String>();
+        for(CPicture cpicture:cpictures){
+            imgs.add(Commons.domain + cpicture.getPicName());
+        }
+        jsonObject.put("img", imgs);
         return jsonObject;
     }
 

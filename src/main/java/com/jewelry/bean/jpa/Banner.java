@@ -11,6 +11,7 @@ public class Banner {
     private Long goId;
     private String imgUrl;
     private Integer status;
+    private Integer pindex;
 
     @Id
     @Column(name = "id")
@@ -52,6 +53,16 @@ public class Banner {
         this.status = status;
     }
 
+    @Basic
+    @Column(name = "pindex")
+    public Integer getPindex() {
+        return pindex;
+    }
+
+    public void setPindex(Integer pindex) {
+        this.pindex = pindex;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,6 +74,7 @@ public class Banner {
         if (goId != null ? !goId.equals(banner.goId) : banner.goId != null) return false;
         if (imgUrl != null ? !imgUrl.equals(banner.imgUrl) : banner.imgUrl != null) return false;
         if (status != null ? !status.equals(banner.status) : banner.status != null) return false;
+        if (pindex != null ? !pindex.equals(banner.pindex) : banner.pindex != null) return false;
 
         return true;
     }
@@ -73,6 +85,7 @@ public class Banner {
         result = 31 * result + (goId != null ? goId.hashCode() : 0);
         result = 31 * result + (imgUrl != null ? imgUrl.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (pindex != null ? pindex.hashCode() : 0);
         return result;
     }
 }
