@@ -35,7 +35,7 @@ public class HomeService {
     private HomePageRepository homePageRepository;
 
     public Object getHeadMenu(){
-        List<JewelryType> jewelryTypes = jewelryTypeRepository.findAll();
+        List<JewelryType> jewelryTypes = jewelryTypeRepository.getAllByStatus(1);
         JSONArray result = new JSONArray();
 
         for(JewelryType jewelryType:jewelryTypes){

@@ -8,6 +8,7 @@ public class JewelryType {
     private long id;
     private String name;
     private String enName;
+    private Integer status;
 
     @Id
     @Column(name = "id")
@@ -39,6 +40,16 @@ public class JewelryType {
         this.enName = enName;
     }
 
+    @Basic
+    @Column(name = "status")
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -49,6 +60,7 @@ public class JewelryType {
         if (id != that.id) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (enName != null ? !enName.equals(that.enName) : that.enName != null) return false;
+        if (status != null ? !status.equals(that.status) : that.status != null) return false;
 
         return true;
     }
@@ -58,6 +70,7 @@ public class JewelryType {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (enName != null ? enName.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
     }
 }
