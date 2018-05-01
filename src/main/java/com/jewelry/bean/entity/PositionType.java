@@ -2,5 +2,6 @@ package com.jewelry.bean.entity;
 
 public enum PositionType {
     List,
-    Detail
+    Detail,
+    Qrcode
 }

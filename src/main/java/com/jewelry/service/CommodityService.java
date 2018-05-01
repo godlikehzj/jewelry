@@ -78,11 +78,20 @@ public class CommodityService {
             for(CPicture cpicture:cpictures){
                 imgs.add(Commons.domain + cpicture.getPicName());
             }
+            jsonObject.put("img", imgs);
+
+            List<CPicture> qrcodes = cPictureRespository.findAllByCommodityIdAndPositionType(commodity.getId(), PositionType.Qrcode.ordinal());
+            List<String> qrcode_imgs = new ArrayList<String>();
+            for(CPicture qrcode:qrcodes){
+                qrcode_imgs.add(Commons.domain + qrcode.getPicName());
+            }
+            jsonObject.put("qrcode", qrcode_imgs);
+
             jsonObject.put("meterial", jewelryMeterialRepository.getOne(commodity.getMeterialId()).getName());
             jsonObject.put("enMeterial", jewelryMeterialRepository.getOne(commodity.getMeterialId()).getEnName());
 
 
-            jsonObject.put("img", imgs);
+
             result.add(jsonObject);
         }
 
@@ -102,6 +111,14 @@ public class CommodityService {
             imgs.add(Commons.domain + cpicture.getPicName());
         }
         jsonObject.put("img", imgs);
+
+        List<CPicture> qrcodes = cPictureRespository.findAllByCommodityIdAndPositionType(commodity_id, PositionType.Qrcode.ordinal());
+        List<String> qrcode_imgs = new ArrayList<String>();
+        for(CPicture qrcode:qrcodes){
+            qrcode_imgs.add(Commons.domain + qrcode.getPicName());
+        }
+        jsonObject.put("qrcode", qrcode_imgs);
+
         return jsonObject;
     }
 
